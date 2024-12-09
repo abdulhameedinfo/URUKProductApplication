@@ -1,0 +1,58 @@
+﻿@using ProductApplication.ViewModels
+@{
+    ViewData["Title"] = "Home Page";
+    @model ProductsViewModel;
+}
+
+<div class="text-center">
+    <h1 class="display-4">All Products</h1>
+    <table>
+        <thead>
+            <tr>
+                <td>
+                    Name
+                </td>
+                <td>
+                    Description
+                </td>
+                <td>
+                    Price
+                </td>
+                <td>
+                    Color
+                </td>
+                <td>
+                    Size
+                </td>
+                <td>
+                    In-Stock
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model.Products)
+            {
+                <tr>
+                    <td>
+                        @product.Name
+                    </td>
+                    <td>
+                        @product.Description
+                    </td>
+                    <td>
+                        @product.Price
+                    </td>
+                    <td>
+                        @product.Color
+                    </td>
+                    <td>
+                        @product.Size
+                    </td>
+                    <td>
+                        @product.InStock
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
