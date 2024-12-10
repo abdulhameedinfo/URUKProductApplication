@@ -1,41 +1,50 @@
 ﻿@using ProductApplication.ViewModels
 @{
     ViewData["Title"] = "Home Page";
-    @model ProductsViewModel;
+    @model ProductListViewModel;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+
 }
 
 <div class="text-center">
     <h1 class="display-4">All Products</h1>
-    <table>
+    <div class="col-12 text-end">
+        @Html.ActionLink("Create New Product", "Create", "Product", null, new { @class = "btn btn-primary" })
+    </div>
+    <table class="table">
         <thead>
             <tr>
-                <td>
+                <th scope="col">
                     Name
-                </td>
-                <td>
+                </th>
+                <th scope="col">
                     Description
-                </td>
-                <td>
+                </th>
+                <th scope="col">
                     Price
-                </td>
-                <td>
+                </th>
+                <th scope="col">
                     Color
-                </td>
-                <td>
+                </th>
+                <th scope="col">
                     Size
-                </td>
-                <td>
+                </th>
+                <th scope="col">
                     In-Stock
-                </td>
+                </th>
+                <th scope="col">
+                    Actions
+                </th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var product in Model.Products)
+            @foreach (var product in Model.Products.ToList())
             {
                 <tr>
-                    <td>
+                    <th scope="row">
                         @product.Name
-                    </td>
+                    </th>
                     <td>
                         @product.Description
                     </td>
@@ -43,13 +52,17 @@
                         @product.Price
                     </td>
                     <td>
-                        @product.Color
+                        @Enum.GetName(typeof(ProductColor), product.Color)
                     </td>
                     <td>
-                        @product.Size
+                          @Enum.GetName(typeof(ProductSize), product.Size)
                     </td>
                     <td>
                         @product.InStock
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Update", "Product", new {id = product.ID}, new { @class = "btn btn-warning" })
+                        @Html.ActionLink("Delete", "Delete", "Product", new {id = product.ID}, new { @class = "btn btn-alert" })
                     </td>
                 </tr>
             }

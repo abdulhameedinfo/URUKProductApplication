@@ -15,7 +15,7 @@ namespace ProductApplication.Models
 
         public Double? Price{ get; set; }
 
-        public string? Color{ get; set; }
+        public int? Color{ get; set; }
 
         public int? Size { get; set; }
         public int? InStock { get; set; }

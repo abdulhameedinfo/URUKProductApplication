@@ -7,6 +7,7 @@ using ProductApplication.ViewModels;
 
 namespace ProductApplication.Controllers
 {
+    [Route("Product")]
     public class ProductController : Controller
     {
         private readonly ILogger<ProductController> _logger;
@@ -20,27 +21,59 @@ namespace ProductApplication.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetProducts()
+        [Route("/")]
+        [Route("Index")]
+        public IActionResult Index()
         {
             var products = _ProductRepository.GetProducts();
-            return View("Products", new ProductsViewModel() { Products = products});
+            return View("Products", new ProductListViewModel() { Products = products });
+        }
+
+        [HttpGet]
+        [Route("Create")]
+        public IActionResult CreateProduct()
+        {
+            return View(new ProductViewModel() { product = new ProductDTO() });
         }
 
         [HttpPost]
-        public IActionResult CreateProduct()
+        [Route("Create")]
+        public IActionResult CreateProduct([Bind(Prefix = "product")] ProductDTO productDTO)
         {
-            return View();
-        }
-        [HttpPut]
-        public IActionResult UpdateProduct()
-        {
-            return View();
+            if (ModelState.IsValid)
+            {
+                _ProductRepository.CreateProduct(productDTO);
+            }
+            else
+            {
+                return View(new ProductViewModel() { product = productDTO });
+            }
+            return RedirectToAction("Index");
         }
 
-        [HttpDelete]
-        public IActionResult DeleteProduct()
+        [HttpGet]
+        [Route("Update/{id:guid}")]
+        public IActionResult UpdateProduct(Guid id)
         {
-            return View();
+            var productDTO = _ProductRepository.GetProductById(id);
+            var updateProductModel = new ProductViewModel() { product = productDTO };
+            return View("CreateProduct", updateProductModel);
+        }
+
+        [HttpPost]
+        [Route("Update")]
+        public IActionResult UpdateProduct([Bind(Prefix = "product")] ProductDTO productDTO)
+        {
+            _ProductRepository.UpdateProduct(productDTO);
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        [Route("Delete/{id:guid}")]
+        public IActionResult DeleteProduct(Guid id)
+        {
+            _ProductRepository.DeleteProductById(id);
+            return RedirectToAction("Index");
         }
     }
 }

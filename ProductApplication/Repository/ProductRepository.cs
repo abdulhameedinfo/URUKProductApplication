@@ -76,13 +76,12 @@ namespace ProductApplication.Repository
             });
         }
 
-        void IProductRepository.UpdateProductById(ProductDTO productDTO)
+        void IProductRepository.UpdateProduct(ProductDTO productDTO)
         {
             var product = productContext.Products.FirstOrDefault(x => x.ID == productDTO.ID);
 
             if (product != null)
             {
-                product.ID = productDTO.ID;
                 product.Name = productDTO.Name;
                 product.Color = productDTO.Color;
                 product.Description = productDTO.Description;

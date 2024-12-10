@@ -8,16 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-//// Add Product Context service to the container
-//builder.Services.AddDbContextFactory<ProductContext>(
-//        options => options.UseSqlServer(
-//            @"Server=((LocalDB)\\MSSQLLocalDB;Database=URUKProducts;ConnectRetryCount=0"));
-
 // Add Product Context service to the container
-builder.Services.AddDbContextFactory<ProductContext>(
-    options => options.UseSqlServer(
+builder.Services.AddDbContextFactory<ProductContext>(options =>
+    options.UseSqlServer(
         @"Server=(LocalDB)\MSSQLLocalDB;Database=URUKProducts;ConnectRetryCount=0"));
-
 
 // Add ProductRepository DI
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
@@ -41,7 +35,7 @@ app.MapStaticAssets();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
+    pattern: "{controller=Product}/{action=Index}/{id?}")
     .WithStaticAssets();
 
 

@@ -8,7 +8,7 @@ namespace ProductApplication.Repository.Interface
         ProductDTO? GetProductById(Guid id);
 
         void CreateProduct(ProductDTO productDTO);
-        void UpdateProductById(ProductDTO productDTO);
+        void UpdateProduct(ProductDTO productDTO);
         void DeleteProductById(Guid id);
 
 

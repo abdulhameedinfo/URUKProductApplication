@@ -1,0 +1,87 @@
+﻿@using ProductApplication.ViewModels
+@model ProductViewModel
+
+@{
+    ViewData["Title"] = "Create Product";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="text-center">
+        <h1 class="display-4">Create New Product</h1>
+    </div>
+    @if(!ViewData.ModelState.IsValid)
+    {
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-left alert alert-danger">
+                @Html.ValidationSummary()
+            </div>
+        </div>
+    }
+    
+    @using (Html.BeginForm(Model.product.ID == Guid.Empty ? "Create" : "Update", "Product", FormMethod.Post))
+    {
+        <!-- For Edit  -->
+        @Html.HiddenFor(m => m.product.ID)
+
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <!-- Product Name -->
+                <div class="form-group row mb-2">
+                    @Html.LabelFor(m => m.product.Name, "* Product Name", new { @class = "col-sm-4 col-form-label text-right" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.product.Name, new { name = "Name", @class = "form-control", placeholder = "Enter product name" })
+                    </div>
+                </div>
+
+                <!-- Product Description -->
+                <div class="form-group row mb-2">
+                    @Html.LabelFor(m => m.product.Description, "* Product Description", new { @class = "col-sm-4 col-form-label text-right" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.product.Description, new { @class = "form-control", placeholder = "Enter product description" })
+                    </div>
+                </div>
+
+                <!-- Product Price -->
+                <div class="form-group row mb-2">
+                    @Html.LabelFor(m => m.product.Price, "* Product Price", new { @class = "col-sm-4 col-form-label text-right" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.product.Price, new { @class = "form-control", placeholder = "Enter product price" })
+                    </div>
+                </div>
+
+                <!-- Product Color -->
+                <div class="form-group row mb-2">
+                    @Html.LabelFor(m => m.product.Color, "* Product Color", new { @class = "col-sm-4 col-form-label text-right" })
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(m => m.product.Color, Model.ProductColorOptions, "Select Color", new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <!-- Product Size -->
+                <div class="form-group row mb-2">
+                    @Html.LabelFor(m => m.product.Size, "* Product Size", new { @class = "col-sm-4 col-form-label text-right" })
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(m => m.product.Size, Model.ProductSizeOptions, "Select Size", new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <!-- Product In-Stock -->
+                <div class="form-group row mb-2">
+                    @Html.LabelFor(m => m.product.InStock, "* Product In-Stock", new { @class = "col-sm-4 col-form-label text-right" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.product.InStock, new { @class = "form-control", placeholder = "Enter product stock quantity" })
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="form-group row">
+                    <div class="col-sm-8 offset-sm-4">
+                        @Html.ActionLink("Cancel", "Index", "Product",null, new { @class="btn bnt-default"})
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
